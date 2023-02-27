@@ -12,7 +12,7 @@ from prednet import *
 from utils import progress_bar
 from torch.autograd import Variable
 
-def train_prednet(model='PredNetTied', cls=6, gpunum=4, lr=0.01):
+def train_prednet(model='PredNetTied', cls=6, gpunum=1, lr=0.01):
     use_cuda = torch.cuda.is_available() # choose to use gpu if possible
     best_acc = 0  # best test accuracy
     start_epoch = 0  # start from epoch 0 or last checkpoint epoch
@@ -101,7 +101,7 @@ def train_prednet(model='PredNetTied', cls=6, gpunum=4, lr=0.01):
             loss.backward()
             optimizer.step()
     
-            train_loss += loss.data[0]
+            train_loss += loss.item()
             _, predicted = torch.max(outputs.data, 1)
             total += targets.size(0)
             correct += predicted.eq(targets.data).cpu().sum()
@@ -128,7 +128,7 @@ def train_prednet(model='PredNetTied', cls=6, gpunum=4, lr=0.01):
             outputs = net(inputs)
             loss = criterion(outputs, targets)
     
-            test_loss += loss.data[0]
+            test_loss += loss.item()
             _, predicted = torch.max(outputs.data, 1)
             total += targets.size(0)
             correct += predicted.eq(targets.data).cpu().sum()
