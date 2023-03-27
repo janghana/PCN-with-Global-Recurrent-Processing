@@ -73,7 +73,7 @@ def train_prednet(model='PredNetTied', cls=6, gpunum=1, lr=0.01):
                 {'params': rateparas, 'weight_decay': 0},
                 ], lr=lr, momentum=0.9, weight_decay=5e-4)
       
-
+    print(use_cuda)
     # Parallel computing using mutiple gpu
     if use_cuda:
         net.cuda()
